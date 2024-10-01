@@ -1,4 +1,6 @@
-﻿namespace Dominio.Entidades;
+﻿using Dominio.Regras;
+
+namespace Dominio.Entidades;
 
 /// <summary>
 /// Armazena um produto
@@ -29,4 +31,17 @@ public class Produto : Entidade
     /// Identificador do fornecedor
     /// </summary>
     public int IdFornecedor { get; private set; }
+
+    public void Validate()
+    {
+        AddNotifications(new ProdutoRegraNegocio()
+            .DataFabricacaoNaoPodeSerMaiorQueDataValidade(DataFabricacao, DataValidade)
+            .DescricaoNaoPodeSerNula(Descricao)
+        );
+    }
+
+    public void AtualizarFornecedor(int idFornecedor)
+    {
+        IdFornecedor = idFornecedor;
+    }
 }

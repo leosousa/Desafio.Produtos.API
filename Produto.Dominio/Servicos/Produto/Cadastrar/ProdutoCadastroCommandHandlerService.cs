@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Dominio.Contratos.Repositorio;
+using Dominio.Contratos.Servicos;
 using Flunt.Notifications;
 using MediatR;
 
 namespace Dominio.Usecases.Produto.Cadastrar;
 
-public class ProdutoCadastroCommandHandlerService : Notifiable<Notification>, IRequestHandler<ProdutoCadastroCommand, ProdutoCadastroCommandResult?>
+//public class ProdutoCadastroCommandHandlerService : Notifiable<Notification>, IRequestHandler<ProdutoCadastroCommand, ProdutoCadastroCommandResult?>
+public class ProdutoCadastroCommandHandlerService : Notifiable<Notification>, IProdutoCadastroService
 {
     private readonly IProdutoRepository _produtoRepository;
     private readonly IMapper _mapper;
@@ -16,19 +18,33 @@ public class ProdutoCadastroCommandHandlerService : Notifiable<Notification>, IR
         _mapper = mapper;
     }
 
-    public async Task<ProdutoCadastroCommandResult?> Handle(ProdutoCadastroCommand request, CancellationToken cancellationToken)
+    //public async Task<ProdutoCadastroCommandResult?> Handle(ProdutoCadastroCommand request, CancellationToken cancellationToken)
+    //{
+    //    request.Validate();
+
+    //    if (!request.IsValid)
+    //    {
+    //        AddNotifications(request);
+    //    }
+
+    //    var produto = _mapper.Map<Entidades.Produto>(request);
+
+    //    var produtoCadastrado = await _produtoRepository.CadastrarAsync(produto);
+
+    //    return await Task.FromResult(new ProdutoCadastroCommandResult(produtoCadastrado));
+    //}
+
+    public async Task<Entidades.Produto> CadastrarAsync(Entidades.Produto produto, CancellationToken cancellationToken)
     {
-        request.Validate();
+        produto.Validate();
 
-        if (!request.IsValid)
+        if (!produto.IsValid)
         {
-            AddNotifications(request);
+            AddNotifications(produto);
         }
-
-        var produto = _mapper.Map<Entidades.Produto>(request);
 
         var produtoCadastrado = await _produtoRepository.CadastrarAsync(produto);
 
-        return await Task.FromResult(new ProdutoCadastroCommandResult(produtoCadastrado));
+        return await Task.FromResult(produtoCadastrado);
     }
 }

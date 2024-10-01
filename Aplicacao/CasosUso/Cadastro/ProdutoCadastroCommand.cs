@@ -1,10 +1,7 @@
-﻿using Dominio.Regras;
-using Flunt.Notifications;
-using Flunt.Validations;
+﻿using Flunt.Notifications;
 using MediatR;
-using System.Xml.Linq;
 
-namespace Dominio.Usecases.Produto.Cadastrar;
+namespace Aplicacao.CasosUso.Produto.Cadastrar;
 
 public class ProdutoCadastroCommand : Notifiable<Notification>, IRequest<ProdutoCadastroCommandResult>
 {
@@ -27,4 +24,9 @@ public class ProdutoCadastroCommand : Notifiable<Notification>, IRequest<Produto
     /// Data de validade do produto
     /// </summary>
     public DateTime DataValidade { get; set; }
+
+    /// <summary>
+    /// Identificador do fornecedor
+    /// </summary>
+    public int IdFornecedor { get; set; }
 }
