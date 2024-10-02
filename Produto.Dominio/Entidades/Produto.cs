@@ -39,21 +39,28 @@ public class Produto : Entidade
         AddNotifications(new ProdutoRegraNegocio()
             .DataFabricacaoNaoPodeSerMaiorQueDataValidade(DataFabricacao, DataValidade)
             .DescricaoNaoPodeSerNula(Descricao)
+            .FornecedorPrecisaSerInformado(IdFornecedor)
         );
     }
 
     public void AtualizarFornecedor(int idFornecedor)
     {
         IdFornecedor = idFornecedor;
+
+        this.Validate();
     }
 
     public void AtualizarDescricao(string descricao)
     {
         Descricao = descricao;
+
+        this.Validate();
     }
 
     public void AtualizarDataFabricacao(DateTime dataFabricacao)
     {
         DataFabricacao = dataFabricacao;
+
+        this.Validate();
     }
 }

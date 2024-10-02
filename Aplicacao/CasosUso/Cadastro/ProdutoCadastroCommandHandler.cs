@@ -2,12 +2,11 @@
 using Dominio.Entidades;
 using Dominio.Servicos.Fornecedor.BuscaPorId;
 using Dominio.Servicos.Produto.Cadastrar;
-using Flunt.Notifications;
 using MediatR;
 
 namespace Aplicacao.CasosUso.Produto.Cadastrar;
 
-public class ProdutoCadastroCommandHandler : Notifiable<Notification>, 
+public class ProdutoCadastroCommandHandler : 
     IRequestHandler<ProdutoCadastroCommand, ProdutoCadastroCommandResult?>
 {
     private readonly IProdutoCadastroDomainService _produtoCadastroService;
@@ -28,29 +27,23 @@ public class ProdutoCadastroCommandHandler : Notifiable<Notification>,
     {
         // Mapear entidade
         var produto = _mapper.Map<Dominio.Entidades.Produto>(request);
+        ProdutoCadastroCommandResult result = new(); 
 
         if (!produto.IsValid)
         {
-            AddNotifications(produto.Notifications);
+            result.AddNotifications(produto.Notifications);
 
-            return await Task.FromResult<ProdutoCadastroCommandResult?>(null);
+            return await Task.FromResult(result);
         }
 
         // Buscar fornecedor
-        if (produto.IdFornecedor <= 0)
-        {
-            AddNotification(nameof(Fornecedor), "Fornecedor não informado!");
-
-            return await Task.FromResult<ProdutoCadastroCommandResult?>(null);
-        }
-
         var fornecedor = await _fornecedorBuscaPorIdService.BuscaPorId(produto.IdFornecedor);
 
         if (fornecedor is null)
         {
-            AddNotification(nameof(Fornecedor), "Fornecedor não encontrado!");
+            result.AddNotification(nameof(Fornecedor), "Fornecedor não encontrado!");
 
-            return await Task.FromResult<ProdutoCadastroCommandResult?>(null);
+            return await Task.FromResult(result);
         }
 
         produto.AtualizarFornecedor(fornecedor.Id);
@@ -58,13 +51,22 @@ public class ProdutoCadastroCommandHandler : Notifiable<Notification>,
         // Cadastrar produto
         var produtoCadastrado = await _produtoCadastroService.CadastrarAsync(produto, cancellationToken);
 
-        if (!produtoCadastrado.IsValid)
+        if (produtoCadastrado is null)
         {
-            AddNotifications(produtoCadastrado.Notifications);
+            result.AddNotification(nameof(Produto), "Produto não cadastrado!");
 
-            return await Task.FromResult<ProdutoCadastroCommandResult?>(null);
+            return await Task.FromResult(result);
         }
 
-        return await Task.FromResult(new ProdutoCadastroCommandResult(produtoCadastrado.Id));
+        if (!produtoCadastrado.IsValid)
+        {
+            result.AddNotifications(produtoCadastrado.Notifications);
+
+            return await Task.FromResult(result);
+        }
+
+        result = _mapper.Map<ProdutoCadastroCommandResult>(produto);
+
+        return await Task.FromResult(result);
     }
 }

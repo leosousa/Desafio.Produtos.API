@@ -1,5 +1,8 @@
-﻿using Bogus;
+﻿using Aplicacao.CasosUso.Produto.Cadastrar;
+using Bogus;
+using Bogus.DataSets;
 using Dominio.Entidades;
+using System.Runtime.CompilerServices;
 
 namespace TesteUnitario.Dominio;
 
@@ -25,8 +28,23 @@ public class ProdutoMock : Faker<Produto>
         return new ProdutoMock().Generate();
     }
 
-    public static Produto? GerarObjetoNulo()
+    public static Produto? GerarObjetoNulo() => null;
+
+    public static Produto GerarObjetoInvalido()
     {
-        return null;
+        var produto = GerarObjeto();
+
+        produto.AtualizarDescricao(string.Empty);
+
+        return produto;
+    }
+
+    public static Produto GerarObjetoSemFornecedor()
+    {
+        var produto = GerarObjeto();
+
+        produto.AtualizarFornecedor(0);
+
+        return produto;
     }
 }

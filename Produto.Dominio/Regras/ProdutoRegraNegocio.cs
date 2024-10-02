@@ -26,4 +26,14 @@ public class ProdutoRegraNegocio : Contract<Notification>
 
         return this;
     }
+
+    public ProdutoRegraNegocio FornecedorPrecisaSerInformado(int idFornecedor)
+    {
+        if (idFornecedor <= 0)
+        {
+            AddNotification(nameof(Entidades.Produto.IdFornecedor), "Fornecedor inválido!");
+        }
+
+        return this;
+    }
 }

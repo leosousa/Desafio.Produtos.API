@@ -19,4 +19,6 @@ public class FornecedorMock : Faker<Fornecedor>
     {
         return new FornecedorMock().Generate();
     }
+
+    public static Fornecedor? GerarObjetoNulo() => null;
 }

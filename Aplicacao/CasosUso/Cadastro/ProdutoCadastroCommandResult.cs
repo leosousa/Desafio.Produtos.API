@@ -1,5 +1,8 @@
-﻿namespace Aplicacao.CasosUso.Produto.Cadastrar;
+﻿using Flunt.Notifications;
 
-public record ProdutoCadastroCommandResult(
-    int IdProduto
-);
+namespace Aplicacao.CasosUso.Produto.Cadastrar;
+
+public class ProdutoCadastroCommandResult() : Notifiable<Notification>
+{
+    public int Id { get; set; }
+}
