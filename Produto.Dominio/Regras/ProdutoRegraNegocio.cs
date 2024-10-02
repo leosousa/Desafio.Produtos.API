@@ -7,7 +7,7 @@ public class ProdutoRegraNegocio : Contract<Notification>
 {
     public ProdutoRegraNegocio DescricaoNaoPodeSerNula(string descricao)
     {
-        if (!string.IsNullOrEmpty(descricao))
+        if (string.IsNullOrEmpty(descricao))
         {
             AddNotification(nameof(Entidades.Produto.Descricao), "Descrição é campo obrigatório");
         }

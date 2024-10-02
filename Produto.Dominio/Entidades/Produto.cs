@@ -46,4 +46,14 @@ public class Produto : Entidade
     {
         IdFornecedor = idFornecedor;
     }
+
+    public void AtualizarDescricao(string descricao)
+    {
+        Descricao = descricao;
+    }
+
+    public void AtualizarDataFabricacao(DateTime dataFabricacao)
+    {
+        DataFabricacao = dataFabricacao;
+    }
 }
