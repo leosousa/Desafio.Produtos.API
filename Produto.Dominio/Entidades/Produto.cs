@@ -32,6 +32,8 @@ public class Produto : Entidade
     /// </summary>
     public int IdFornecedor { get; private set; }
 
+    public Fornecedor Fornecedor { get; private set; }
+
     public void Validate()
     {
         AddNotifications(new ProdutoRegraNegocio()

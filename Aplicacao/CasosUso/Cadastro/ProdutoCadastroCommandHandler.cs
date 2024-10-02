@@ -1,20 +1,22 @@
 ﻿using AutoMapper;
-using Dominio.Contratos.Servicos;
 using Dominio.Entidades;
 using Dominio.Servicos.Fornecedor.BuscaPorId;
+using Dominio.Servicos.Produto.Cadastrar;
 using Flunt.Notifications;
 using MediatR;
 
 namespace Aplicacao.CasosUso.Produto.Cadastrar;
 
-public class ProdutoCadastroCommandHandlerService : Notifiable<Notification>, IRequestHandler<ProdutoCadastroCommand, ProdutoCadastroCommandResult?>
+public class ProdutoCadastroCommandHandler : Notifiable<Notification>, 
+    IRequestHandler<ProdutoCadastroCommand, ProdutoCadastroCommandResult?>
 {
-    private readonly IProdutoCadastroService _produtoCadastroService;
-    private readonly IFornecedorBuscaPorIdService _fornecedorBuscaPorIdService;
+    private readonly IProdutoCadastroDomainService _produtoCadastroService;
+    private readonly IFornecedorBuscaPorIdDomainService _fornecedorBuscaPorIdService;
     private readonly IMapper _mapper;
 
-    public ProdutoCadastroCommandHandlerService(IProdutoCadastroService produtoCadastroService, 
-        IFornecedorBuscaPorIdService fornecedorBuscaPorIdService,
+    public ProdutoCadastroCommandHandler(
+        IProdutoCadastroDomainService produtoCadastroService, 
+        IFornecedorBuscaPorIdDomainService fornecedorBuscaPorIdService,
         IMapper mapper)
     {
         _produtoCadastroService = produtoCadastroService;
@@ -43,6 +45,13 @@ public class ProdutoCadastroCommandHandlerService : Notifiable<Notification>, IR
         }
 
         var fornecedor = await _fornecedorBuscaPorIdService.BuscaPorId(produto.IdFornecedor);
+
+        if (fornecedor is null)
+        {
+            AddNotification(nameof(Fornecedor), "Fornecedor não encontrado!");
+
+            return await Task.FromResult<ProdutoCadastroCommandResult?>(null);
+        }
 
         produto.AtualizarFornecedor(fornecedor.Id);
 

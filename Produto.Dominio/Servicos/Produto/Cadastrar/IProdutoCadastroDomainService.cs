@@ -1,6 +1,6 @@
-﻿namespace Dominio.Contratos.Servicos;
+﻿namespace Dominio.Servicos.Produto.Cadastrar;
 
-public interface IProdutoCadastroService
+public interface IProdutoCadastroDomainService
 {
     Task<Entidades.Produto> CadastrarAsync(Entidades.Produto produto, CancellationToken cancellationToken);
 }
