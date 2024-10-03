@@ -1,28 +1,26 @@
-volumes:
-    database-data:
-
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:latest
-    environment: 
-        SA_PASSWORD: "@Password123"
-        ACCEPT_EULA: "Y"
-        MSSQL_PID: "Developer"
-    ports: ["1433:1433"]
-    volumes:
-      - database-data:/var/opt/mssql
-
-  mssqltools:
-    image: mcr.microsoft.com/mssql-tools:latest
-    depends_on:
-        - sqlserver
-    volumes:
-        - ./setup.sql:/tmp/setup.sql                  
-    command: /bin/bash -c "sleep 15 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P @Password123 -d master -i /tmp/setup.sql"
-
-  produtos.api:
-    image: ${DOCKER_REGISTRY-}produtosapi
-    build: .
-    ports: ["8081:8081"]
-    depends_on: 
-        - mssqltools 
+    sqlserver:
+        image: mcr.microsoft.com/mssql/server:latest
+        environment: 
+            SA_PASSWORD: "@Password123"
+            ACCEPT_EULA: "Y"
+            MSSQL_PID: "Developer"
+        ports: ["1433:1433"]        
+    mssqltools:
+        image: mcr.microsoft.com/mssql-tools
+        depends_on:
+            - sqlserver
+        volumes:
+            - ./setup.sql:/tmp/setup.sql                  
+        command: /bin/bash -c "sleep 10 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P @Password123 -d master -i /tmp/setup.sql"
+    produtosapi:
+        image: ${DOCKER_REGISTRY-}produtosapi
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+        ports:
+            - "8081:8081"
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - mssqltools

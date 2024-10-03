@@ -1,4 +1,5 @@
-﻿using Aplicacao.CasosUso.Produto.Cadastrar;
+﻿using Aplicacao.CasosUso.BuscaPorId;
+using Aplicacao.CasosUso.Produto.Cadastrar;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,19 +44,18 @@ public class ProdutoController : ApiControllerBase
         );
     }
 
-    ///// <summary>
-    ///// Busca um produto já cadastrado pelo seu identificador
-    ///// </summary>
-    ///// <param name="id">Identificador do produto</param>
-    ///// <returns>Produto encontrado</returns>
-    //[HttpGet("{id}")]
-    //public async Task<IActionResult> GetById(int id)
-    //{
-    //    //var result = await Mediator.Send(new GetTaskByIdQuery { Id = id });
-    //    var result = await _mediator.Send(new { Id = id });
+    /// <summary>
+    /// Busca um produto já cadastrado pelo seu identificador
+    /// </summary>
+    /// <param name="id">Identificador do produto</param>
+    /// <returns>Produto encontrado</returns>
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var result = await _mediator.Send(new ProdutoBuscaPorIdQuery { Id = id });
 
-    //    if (result is null) return NotFound();
+        if (result is null) return NotFound();
 
-    //    return Ok(result);
-    //}
+        return Ok(result);
+    }
 }

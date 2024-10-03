@@ -1,4 +1,5 @@
-﻿using Aplicacao.CasosUso.Produto.Cadastrar;
+﻿using Aplicacao.CasosUso.BuscaPorId;
+using Aplicacao.CasosUso.Produto.Cadastrar;
 using AutoMapper;
 using Dominio.Entidades;
 
@@ -10,5 +11,6 @@ public class AutoMapperProfile : Profile
     {
         CreateMap<ProdutoCadastroCommand, Produto>();
         CreateMap<Produto, ProdutoCadastroCommandResult>();
+        CreateMap<Produto, ProdutoBuscaPorIdQueryResult>();
     }
 }
