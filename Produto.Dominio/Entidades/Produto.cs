@@ -46,21 +46,15 @@ public class Produto : Entidade
     public void AtualizarFornecedor(int idFornecedor)
     {
         IdFornecedor = idFornecedor;
-
-        this.Validate();
     }
 
     public void AtualizarDescricao(string descricao)
     {
         Descricao = descricao;
-
-        this.Validate();
     }
 
     public void AtualizarDataFabricacao(DateTime dataFabricacao)
     {
         DataFabricacao = dataFabricacao;
-
-        this.Validate();
     }
 }

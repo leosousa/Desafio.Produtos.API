@@ -10,6 +10,8 @@ public class FornecedorConfiguracao : IEntityTypeConfiguration<Fornecedor>
     {
         builder.ToTable(nameof(Fornecedor));
 
+        builder.Ignore(p => p.Notifications);
+
         builder.HasKey(c => c.Id);
 
         builder

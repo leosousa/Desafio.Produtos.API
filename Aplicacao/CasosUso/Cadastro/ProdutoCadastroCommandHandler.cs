@@ -27,7 +27,9 @@ public class ProdutoCadastroCommandHandler :
     {
         // Mapear entidade
         var produto = _mapper.Map<Dominio.Entidades.Produto>(request);
-        ProdutoCadastroCommandResult result = new(); 
+        produto.Validate();
+
+        ProdutoCadastroCommandResult result = new();
 
         if (!produto.IsValid)
         {

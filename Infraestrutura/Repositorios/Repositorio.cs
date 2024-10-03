@@ -8,8 +8,8 @@ namespace Infraestrutura.Repositorios;
 
 public abstract class Repositorio<T> : IRepositorio<T> where T : Entidade
 {
-    private readonly DbContext _database;
-    private readonly DbSet<T> _dbSet;
+    protected DbContext _database;
+    protected DbSet<T> _dbSet;
 
     public Repositorio(DbContext database)
     {

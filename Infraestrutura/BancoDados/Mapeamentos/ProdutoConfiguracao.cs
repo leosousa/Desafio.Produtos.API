@@ -10,6 +10,8 @@ public class ProdutoConfiguracao : IEntityTypeConfiguration<Produto>
     {
         builder.ToTable(nameof(Produto));
 
+        builder.Ignore(p => p.Notifications);
+
         builder.HasKey(c => c.Id);
 
         builder

@@ -1,4 +1,5 @@
 ﻿using Aplicacao.CasosUso.Produto.Cadastrar;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Produtos.API.Controllers;
@@ -6,6 +7,13 @@ namespace Produtos.API.Controllers;
 [Route("api/produtos")]
 public class ProdutoController : ApiControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public ProdutoController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     /// <summary>
     /// Cadastra um novo produto
     /// </summary>
@@ -14,7 +22,7 @@ public class ProdutoController : ApiControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(ProdutoCadastroCommand produto)
     {
-        var registered = await Mediator.Send(produto);
+        var registered = await _mediator.Send(produto);
 
         if (registered is null)
         {
@@ -26,7 +34,7 @@ public class ProdutoController : ApiControllerBase
             return BadRequest(registered.Notifications);
         }
 
-        return CreatedAtAction(nameof(GetById),
+        return CreatedAtAction("GetById",
            new
            {
                id = registered.Id
@@ -35,19 +43,19 @@ public class ProdutoController : ApiControllerBase
         );
     }
 
-    /// <summary>
-    /// Busca um produto já cadastrado pelo seu identificador
-    /// </summary>
-    /// <param name="id">Identificador do produto</param>
-    /// <returns>Produto encontrado</returns>
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
-    {
-        //var result = await Mediator.Send(new GetTaskByIdQuery { Id = id });
-        var result = await Mediator.Send(new { Id = id });
+    ///// <summary>
+    ///// Busca um produto já cadastrado pelo seu identificador
+    ///// </summary>
+    ///// <param name="id">Identificador do produto</param>
+    ///// <returns>Produto encontrado</returns>
+    //[HttpGet("{id}")]
+    //public async Task<IActionResult> GetById(int id)
+    //{
+    //    //var result = await Mediator.Send(new GetTaskByIdQuery { Id = id });
+    //    var result = await _mediator.Send(new { Id = id });
 
-        if (result is null) return NotFound();
+    //    if (result is null) return NotFound();
 
-        return Ok(result);
-    }
+    //    return Ok(result);
+    //}
 }

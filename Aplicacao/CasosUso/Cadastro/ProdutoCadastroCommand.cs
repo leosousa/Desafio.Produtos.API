@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Aplicacao.CasosUso.Produto.Cadastrar;
 
-public class ProdutoCadastroCommand : Notifiable<Notification>, IRequest<ProdutoCadastroCommandResult>
+public record ProdutoCadastroCommand : IRequest<ProdutoCadastroCommandResult>
 {
     /// <summary>
     /// Descrição do produto
