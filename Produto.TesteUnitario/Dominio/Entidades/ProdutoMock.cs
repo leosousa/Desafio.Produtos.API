@@ -39,6 +39,15 @@ public class ProdutoMock : Faker<Produto>
         return produto;
     }
 
+    public static Produto GerarObjetoValido()
+    {
+        var produto = new ProdutoMock().Generate();
+
+        produto.AtualizarDescricao(string.Empty);
+
+        return produto;
+    }
+
     public static Produto GerarObjetoSemFornecedor()
     {
         var produto = GerarObjeto();
@@ -46,5 +55,17 @@ public class ProdutoMock : Faker<Produto>
         produto.AtualizarFornecedor(0);
 
         return produto;
+    }
+
+    public static IEnumerable<Produto> GerarObjetoLista(int quantidade = 10)
+    {
+        var lista = new List<Produto>();
+
+        for (var index = 0; index < quantidade; index++)
+        {
+            lista.Add(GerarObjeto());
+        }
+
+        return lista;
     }
 }

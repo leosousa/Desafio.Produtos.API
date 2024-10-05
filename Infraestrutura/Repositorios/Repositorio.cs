@@ -54,6 +54,13 @@ public abstract class Repositorio<T> : IRepositorio<T> where T : Entidade
             .ToListAsync();
     }
 
+    public async Task<int> CountAsync(Expression<Func<T, bool>> predicado)
+    {
+        return await _dbSet
+           .Where(predicado)
+           .CountAsync();
+    }
+
     public async Task<bool> RemoverAsync(T produto)
     {
         _dbSet.Remove(produto);

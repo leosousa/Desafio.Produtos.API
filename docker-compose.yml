@@ -1,26 +1,33 @@
 services:
-    sqlserver:
+    database:
         image: mcr.microsoft.com/mssql/server:latest
         environment: 
             SA_PASSWORD: "@Password123"
             ACCEPT_EULA: "Y"
-            MSSQL_PID: "Developer"
-        ports: ["1433:1433"]        
-    mssqltools:
-        image: mcr.microsoft.com/mssql-tools
-        depends_on:
-            - sqlserver
+        ports: ["1433:1433"]
+        networks:
+            - api-network
         volumes:
-            - ./setup.sql:/tmp/setup.sql                  
-        command: /bin/bash -c "sleep 10 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P @Password123 -d master -i /tmp/setup.sql"
-    produtosapi:
+            - sqlserverdata:/var/opt/mssql
+
+    api:
         image: ${DOCKER_REGISTRY-}produtosapi
         environment:
-            - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ConnectionStrings__DefaultConnection=Server=database;Database=ProdutosDb;User ID=sa;Password=@Password123;TrustServerCertificate=True
         ports:
             - "8081:8081"
         build:
             context: .
             dockerfile: Dockerfile
         depends_on:
-            - mssqltools
+            - database
+        networks:
+            - api-network
+        entrypoint: /bin/bash -c "sleep 80 && dotnet Produtos.API.dll"
+
+networks:
+  api-network:
+
+volumes:
+  sqlserverdata:

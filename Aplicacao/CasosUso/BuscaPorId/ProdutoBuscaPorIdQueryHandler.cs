@@ -22,6 +22,13 @@ public class ProdutoBuscaPorIdQueryHandler :
     {
         ProdutoBuscaPorIdQueryResult result = new();
 
+        if (request is null)
+        {
+            result.AddNotification(nameof(ProdutoBuscaPorIdQuery.Id), "Identificador do produto não informado");
+
+            return await Task.FromResult(result);
+        }
+
         var produto = await _produtoBuscaPorIdDomainService.BuscarPorIdAsync(request.Id, cancellationToken);
 
         if (!_produtoBuscaPorIdDomainService.IsValid)

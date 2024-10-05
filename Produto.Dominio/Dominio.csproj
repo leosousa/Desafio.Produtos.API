@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Flunt" Version="2.0.5" />
+    <PackageReference Include="LinqKit.Core" Version="1.2.5" />
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 

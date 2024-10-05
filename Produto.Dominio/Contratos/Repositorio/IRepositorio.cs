@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using System;
 using System.Linq.Expressions;
 
 namespace Dominio.Contratos.Repositorio;
@@ -20,6 +21,13 @@ public interface IRepositorio<T> where T: Entidade
     /// <param name="tamanhoPagina">Tamanho da página</param>
     /// <returns>Lista de registros encontrados</returns>
     Task<IEnumerable<T>> ListarAsync(Expression<Func<T, bool>> predicado, int numeroPagina, int tamanhoPagina);
+
+    /// <summary>
+    /// Conta os registros na base de dados de acordo com os filtros informados
+    /// </summary>
+    /// <param name="predicado">Expressão lambda de filtro de busca</param>
+    /// <returns>Total de registros encontrados</returns>
+    Task<int> CountAsync(Expression<Func<T, bool>> predicado);
 
     /// <summary>
     /// Cadastra um novo registro na base de dados
