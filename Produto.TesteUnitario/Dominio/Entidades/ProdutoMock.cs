@@ -43,7 +43,7 @@ public class ProdutoMock : Faker<Produto>
     {
         var produto = new ProdutoMock().Generate();
 
-        produto.AtualizarDescricao(string.Empty);
+        produto.AtualizarDataValidade(produto.DataFabricacao.AddDays(1));
 
         return produto;
     }

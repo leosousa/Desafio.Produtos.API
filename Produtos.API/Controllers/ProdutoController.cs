@@ -1,6 +1,8 @@
 ﻿using Aplicacao.CasosUso.BuscaPorId;
+using Aplicacao.CasosUso.Edicao;
 using Aplicacao.CasosUso.ListaPaginada;
 using Aplicacao.CasosUso.Produto.Cadastrar;
+using Dominio.Entidades;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -106,5 +108,31 @@ public class ProdutoController : ApiControllerBase
         }
             
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Edita um produto já cadastrado
+    /// </summary>
+    /// <param name="id" > Id do produto a ser alterado</param>
+    /// <param name="produto">Produto a ser alterado</param>
+    /// <returns>Produto editado</returns>
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Editar(int id, [FromBody] ProdutoEdicaoCommand produto)
+    {
+        if (produto is not null) produto.Id = id;
+
+        var produtoEditado = await _mediator.Send(produto!);
+
+        if (produtoEditado is null)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+        if (produtoEditado.Notifications.Count > 0)
+        {
+            return BadRequest(produtoEditado.Notifications);
+        }
+
+        return Ok(produtoEditado);
     }
 }

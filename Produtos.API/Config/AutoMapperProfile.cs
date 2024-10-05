@@ -1,4 +1,5 @@
 ﻿using Aplicacao.CasosUso.BuscaPorId;
+using Aplicacao.CasosUso.Edicao;
 using Aplicacao.CasosUso.ListaPaginada;
 using Aplicacao.CasosUso.Produto.Cadastrar;
 using AutoMapper;
@@ -20,5 +21,8 @@ public class AutoMapperProfile : Profile
         CreateMap<ProdutoListaPaginadaQuery, ProdutoListaFiltroDTO>();
         CreateMap<ListaPaginadaResultDTO<Produto>, ProdutoListaPaginadaQueryResult>();
         CreateMap<Produto, ProdutoItemResult>();
+
+        CreateMap<ProdutoEdicaoCommand, Produto>();
+        CreateMap<Produto, ProdutoEdicaoCommandResult>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Dominio.Servicos.Fornecedor.BuscaPorId;
 using Dominio.Servicos.Produto.BuscaPorId;
 using Dominio.Servicos.Produto.Cadastrar;
+using Dominio.Servicos.Produto.Editar;
 using Dominio.Servicos.Produto.ListaPaginada;
 using Dominio.Usecases.Produto.Cadastrar;
 
@@ -13,6 +14,7 @@ public static class DominioDependencyConfig
         services.AddScoped<IProdutoCadastroDomainService, ProdutoCadastroDomainService>();
         services.AddScoped<IProdutoBuscaPorIdDomainService, ProdutoBuscaPorIdDomainService>();
         services.AddScoped<IProdutoListaDomainService, ProdutoListaDomainService>();
+        services.AddScoped<IProdutoEdicaoDomainService, ProdutoEdicaoDomainService>();
 
         services.AddScoped<IFornecedorBuscaPorIdDomainService, FornecedorBuscaPorIdDomainService>();
     }

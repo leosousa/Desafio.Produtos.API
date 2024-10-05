@@ -57,4 +57,20 @@ public class Produto : Entidade
     {
         DataFabricacao = dataFabricacao;
     }
+
+    public void AtualizarDataValidade(DateTime dataValidade)
+    {
+        DataValidade = dataValidade;
+    }
+
+    public void AtualizarSituacao(bool situacao)
+    {
+        Situacao = situacao;
+    }
+
+    public void AtualizarFornecedor(Fornecedor fornecedor)
+    {
+        Fornecedor = fornecedor;
+        IdFornecedor = fornecedor.Id;
+    }
 }
