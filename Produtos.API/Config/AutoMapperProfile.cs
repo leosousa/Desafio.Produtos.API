@@ -17,6 +17,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Produto, ProdutoCadastroCommandResult>();
 
         CreateMap<Produto, ProdutoBuscaPorIdQueryResult>();
+        CreateMap<Fornecedor, ProdutoBuscaPorIdFornecedorResult>();
 
         CreateMap<ProdutoListaPaginadaQuery, ProdutoListaFiltroDTO>();
         CreateMap<ListaPaginadaResultDTO<Produto>, ProdutoListaPaginadaQueryResult>();

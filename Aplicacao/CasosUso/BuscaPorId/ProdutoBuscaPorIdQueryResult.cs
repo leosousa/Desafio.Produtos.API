@@ -28,4 +28,9 @@ public class ProdutoBuscaPorIdQueryResult : Notifiable<Notification>
     /// Data de validade do produto
     /// </summary>
     public DateTime DataValidade { get; set; }
+
+    /// <summary>
+    /// Fornecedor do produto
+    /// </summary>
+    public ProdutoBuscaPorIdFornecedorResult Fornecedor { get; set; }
 }
