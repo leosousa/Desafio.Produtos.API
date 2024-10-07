@@ -79,7 +79,7 @@ public class ProdutoRemocaoDomainServiceTest
     {
         var id = new Faker().Random.Int(min: 1);
         var produtoEncontrado = ProdutoMock.GerarObjeto();
-        var produtoRemovido = ProdutoMock.GerarObjeto();
+        var produtoRemovido = ProdutoMock.GerarObjetoRemovido();
 
         _produtoRepository.Setup(repository =>
             repository.BuscarPorIdAsync(It.IsAny<int>()))

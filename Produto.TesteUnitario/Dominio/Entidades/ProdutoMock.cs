@@ -60,6 +60,15 @@ public class ProdutoMock : Faker<Produto>
         return produto;
     }
 
+    public static Produto GerarObjetoRemovido()
+    {
+        var produto = new ProdutoMock().Generate();
+
+        produto.AtualizarSituacao(false);
+
+        return produto;
+    }
+
     public static IEnumerable<Produto> GerarObjetoLista(int quantidade = 10)
     {
         var lista = new List<Produto>();
