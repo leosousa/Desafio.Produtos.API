@@ -33,13 +33,16 @@ public abstract class Repositorio<T> : IRepositorio<T> where T : Entidade
 
     public virtual async Task<T> EditarAsync(T produto)
     {
-        _database.Entry<T>(produto).State = EntityState.Detached;
+        _database.Entry<T>(produto).State = EntityState.Modified;
 
-        //_dbSet.Update(produto);
+        var linhasAfetadas = await _database.SaveChangesAsync();
 
-        await _database.SaveChangesAsync();
+        if (linhasAfetadas <= 0)
+        {
+            return await Task.FromResult<T>(null);
+        }
 
-        return produto;
+        return await Task.FromResult(produto);
     }
 
     public virtual async Task<IEnumerable<T>> ListarAsync()

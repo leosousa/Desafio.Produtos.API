@@ -45,7 +45,7 @@ public class ProdutoEdicaoDomainService : Notifiable<Notification>, IProdutoEdic
             return await Task.FromResult<Entidades.Produto?>(null);
         }
 
-        var produtoEditado = await _produtoRepository.EditarAsync(produto);
+        var produtoEditado = await _produtoRepository.EditarAsync(produtoEncontrado);
 
         return await Task.FromResult(produtoEditado);
     }

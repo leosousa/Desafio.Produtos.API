@@ -2,6 +2,7 @@
 using Aplicacao.CasosUso.Edicao;
 using Aplicacao.CasosUso.ListaPaginada;
 using Aplicacao.CasosUso.Produto.Cadastrar;
+using Aplicacao.CasosUso.Remocao;
 using Dominio.Entidades;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -134,5 +135,28 @@ public class ProdutoController : ApiControllerBase
         }
 
         return Ok(produtoEditado);
+    }
+
+    /// <summary>
+    /// Remove um produto já cadastrado pelo seu identificador
+    /// </summary>
+    /// <param name="id">Identificador do produto</param>
+    /// <returns>Informação se o produto foi ou não removido</returns>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Remover(int id)
+    {
+        var produtoRemovido = await _mediator.Send(new ProdutoRemocaoCommand { Id = id });
+
+        if (produtoRemovido is null)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+        if (produtoRemovido.Notifications.Any())
+        {
+            return BadRequest(produtoRemovido.Notifications);
+        }
+
+        return NoContent();
     }
 }

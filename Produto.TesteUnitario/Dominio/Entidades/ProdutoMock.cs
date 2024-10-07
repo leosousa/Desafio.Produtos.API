@@ -3,6 +3,7 @@ using Bogus;
 using Bogus.DataSets;
 using Dominio.Entidades;
 using System.Runtime.CompilerServices;
+using TesteUnitario.Dominio.Entidades;
 
 namespace TesteUnitario.Dominio;
 
@@ -21,6 +22,8 @@ public class ProdutoMock : Faker<Produto>
         RuleFor(produto => produto.Situacao, faker => faker.Random.Bool());
 
         RuleFor(produto => produto.IdFornecedor, faker => faker.Random.Int(min: 1));
+
+        RuleFor(produto => produto.Fornecedor, FornecedorMock.GerarObjeto());
     }
 
     public static Produto GerarObjeto()
