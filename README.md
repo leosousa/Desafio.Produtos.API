@@ -1,1 +1,71 @@
 # Desafio.Produtos.API
+API de gerenciamento de produtos utilizando o .Net 8.
+
+## Tecnologias utilizadas
+- .Net Core 8
+- Entity Framework Core 8
+- Sql Server
+- Containeirzação de aplicação com Docker
+
+# Padrões utilizados
+- DDD
+- Repository Pattern
+- CQRS Pattern
+
+## Arquitetura
+A arquitetura utilizada é a de desenvolvimento em camadas, com foco no domínio da aplicação, utilizando DDD, com as seguintes camadas abaixo:
+
+### API
+- Camada de exposição das rotas de API disponíveis.
+
+### Aplicacao
+- Camada de aplicação, contendo os casos de uso da aplicação e ligação com os serviços do domínio.
+
+### Dominio
+- Camada de domínio e coração do sistema, contendo os casos de uso do sistemaas, entidades e interfaces de comunicação com outras camadas.
+
+### Infraestrutura
+- Camada de infra que provê recursos utilizados pelo sistema, tais como a comunicação com o banco de dados.
+
+### Teste Unitario
+- Camada de de testes unitários das camadas de aplicação e domínio.
+
+
+## Primeiros passos
+
+### Requisitos para rodar a aplicação
+Para rodar a aplicação precisa dos seguintes requisitos instalados na máquina
+- SDK do .Net Core 8
+- Docker
+
+#### Rodando a aplicação
+Siga os passos abaixo para rodar a aplicação com o Docker
+
+##### Rodando a aplicação via Docker
+1. Abra um terminal, acesse a pasta raiz onde está a  solution e rode o comando abaixo:
+```
+docker-compose up
+```
+
+2. Acesse a url localmente
+[http://localhost:8081/swagger/index.html](http://localhost:8081/swagger/index.html)
+
+##### Rodando a aplicação localmente
+1. Para rodar localmente, você vai precisar ter instalado o Sql Server Express instalado
+1. Crie um banco de dados com o Sql Server Express localmente
+
+2. Ajuste a string de conexão no arquivo appSetings.json e appSettings.Development.json com o banco criado
+```
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost,1433;Database=ProdutosDb;User ID=sa;Password=@Password123;TrustServerCertificate=True"
+  },
+```
+
+3. Inicie a aplicação com o Visual Studio ou digite o comando abaixo na raiz do projeto
+```
+dotnet run --project "Produtos.API/Produtos.API.csproj"
+```
+
+4. Acesse a url
+http://localhost:5105/swagger/index.html
+[http://localhost:5105/swagger/index.html](http://localhost:5105/swagger/index.html)
