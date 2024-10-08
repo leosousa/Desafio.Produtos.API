@@ -6,9 +6,9 @@ WORKDIR /app
 
 # Copia o arquivo do projeto (.csproj) para o contêiner e restaura as dependências
 #COPY *.csproj ./
-COPY ["Produto.Dominio/Dominio.csproj", "Produto.Dominio/"]
-COPY ["Infraestrutura/Infraestrutura.csproj", "Infraestrutura/"]
-COPY ["Aplicacao/Aplicacao.csproj", "Aplicacao/"]
+COPY ["Produtos.Dominio/Produtos.Dominio.csproj", "Produto.Dominio/"]
+COPY ["Produtos.Infraestrutura/Produtos.Infraestrutura.csproj", "Infraestrutura/"]
+COPY ["Produtos.Aplicacao/Produtos.Aplicacao.csproj", "Aplicacao/"]
 COPY ["Produtos.API/Produtos.API.csproj", "Produtos.API/"]
 
 RUN dotnet restore "Produtos.API/Produtos.API.csproj"

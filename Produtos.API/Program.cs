@@ -9,9 +9,9 @@ builder.Services.AddDomainDependencies();
 builder.Services.AddInfraDependencies(builder.Configuration);
 
 var assemblies = new Assembly[] {
-    Assembly.Load("Dominio"),
-    Assembly.Load("Infraestrutura"),
-    Assembly.Load("Aplicacao")
+    Assembly.Load("Produtos.Dominio"),
+    Assembly.Load("Produtos.Infraestrutura"),
+    Assembly.Load("Produtos.Aplicacao")
 };
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
