@@ -44,8 +44,12 @@ Siga os passos abaixo para rodar a aplicação com o Docker
 ##### Rodando a aplicação via Docker
 1. Abra um terminal, acesse a pasta raiz onde está a  solution e rode o comando abaixo:
 ```
-docker-compose up
+docker-compose up --build
 ```
+
+> :exclamation:
+> Observação: Aguarde até que o banco de dados fique de pé. Ele demora um pouco utilizando a imagem SqlServer.
+>
 
 2. Acesse a url localmente
 [http://localhost:8081/swagger/index.html](http://localhost:8081/swagger/index.html)
